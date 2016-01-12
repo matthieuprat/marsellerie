@@ -1,0 +1,16 @@
+{
+  "name": "lottery",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "babel lottery.es6 --out-file lottery.js",
+    "watch": "babel lottery.es6 --out-file lottery.js --watch"
+  },
+  "babel": {
+    "presets": [ "es2015" ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.3.0",
+    "babel-preset-es2015": "^6.3.0"
+  },
+  "license": "ISC"
+}

@@ -22,7 +22,6 @@
       padding: 0.5em;
       color: lightgrey;
       text-align: center;
-      text-transform: capitalize;
     }
 
     .highlight {
@@ -33,53 +32,7 @@
     </style>
   </head>
   <body>
-    <div id="target">Press any key</div>
-    <script>
-    !function () {
-      'use strict'
-
-      const timeout = i => 90 + 1000 * Math.pow(i / 50, 2)
-      const shuffle = a => a.reduce((a, e) => (a.splice(Math.random() * (a.length + 1), 0, e), a), [])
-      const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(location.search) || [])[1] || '')
-
-      let target
-      let candidates
-      let running = false
-      let limit, i, j
-
-      function disp() {
-        if (i > limit)
-          return setTimeout(stop, 100)
-
-        target.innerHTML = candidates[j++ % candidates.length]
-        setTimeout(disp, timeout(i++))
-      }
-
-      function start() {
-        if (running) {
-          i = 0
-          return
-        }
-        running = true
-        i = j = 0
-        candidates = shuffle(candidates)
-        limit = 20 + Math.random() * 5
-        target.classList.remove('highlight')
-        disp()
-      }
-
-      function stop() {
-        target.classList.add('highlight')
-        running = false
-      }
-
-      window.addEventListener('keydown', start)
-
-      target = document.getElementById('target')
-      candidates = qp('candidates')
-      if (!candidates) throw "Missing 'candidates' query parameter"
-      candidates = candidates.split('|')
-    }()
-    </script>
+    <div id="target">Press the space key</div>
+    <script src="lottery.js"></script>
   </body>
 </html>
