@@ -50,3 +50,8 @@ window.addEventListener('keydown', function (e) {
     start();
   }
 });
+
+window.addEventListener('click', function (e) {
+  e.preventDefault();
+  start();
+});

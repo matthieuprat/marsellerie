@@ -39,3 +39,8 @@ window.addEventListener('keydown', e => {
     start()
   }
 })
+
+window.addEventListener('click', e => {
+  e.preventDefault()
+  start()
+})
