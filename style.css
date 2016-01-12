@@ -15,10 +15,18 @@ div {
   padding: 0.5em;
   color: lightgrey;
   text-align: center;
+  cursor: pointer;
 }
 
 .highlight {
   color: black;
   background: lightgrey;
   transition: background 0.5s;
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }

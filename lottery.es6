@@ -40,7 +40,7 @@ window.addEventListener('keydown', e => {
   }
 })
 
-window.addEventListener('click', e => {
+target.addEventListener('click', e => {
   e.preventDefault()
   start()
 })

@@ -51,7 +51,7 @@ window.addEventListener('keydown', function (e) {
   }
 });
 
-window.addEventListener('click', function (e) {
+target.addEventListener('click', function (e) {
   e.preventDefault();
   start();
 });
