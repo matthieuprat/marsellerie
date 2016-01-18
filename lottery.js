@@ -14,20 +14,15 @@ var qp = function qp(p) {
 var target = document.getElementById('target');
 
 var candidates = (qp('candidates') || 'Yes|No').split('|');
-var running = false;
+var freewheel = undefined,
+    running = undefined;
 var limit = undefined,
     i = undefined,
     j = undefined;
 
-function disp() {
-  if (i > limit) return setTimeout(stop, 100);
-
-  target.innerHTML = candidates[j++ % candidates.length];
-  setTimeout(disp, timeout(i++));
-}
-
 function start() {
   if (running) {
+    freewheel = false;
     i = 0;
     return;
   }
@@ -36,22 +31,33 @@ function start() {
   candidates = shuffle(candidates);
   limit = 20 + Math.random() * 5;
   target.classList.remove('highlight');
-  disp();
+  next();
 }
 
-function stop() {
-  target.classList.add('highlight');
+function next() {
+  if (i > limit) return setTimeout(end, 100);
+  if (freewheel) i++;
+  target.innerHTML = candidates[j++ % candidates.length];
+  setTimeout(next, timeout(i));
+}
+
+function end() {
   running = false;
+  target.classList.add('highlight');
 }
 
-window.addEventListener('keydown', function (e) {
-  if (e.keyCode === 0 || e.keyCode === 32) {
-    e.preventDefault();
-    start();
-  }
-});
-
-target.addEventListener('click', function (e) {
-  e.preventDefault();
-  start();
+;['mousedown', 'touchstart', 'keydown'].forEach(function (e) {
+  return document.addEventListener(e, function (e) {
+    if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
+      e.preventDefault();
+      start();
+    }
+  });
+});['mouseup', 'touchend', 'keyup'].forEach(function (e) {
+  return document.addEventListener(e, function (e) {
+    if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
+      e.preventDefault();
+      freewheel = true;
+    }
+  });
 });

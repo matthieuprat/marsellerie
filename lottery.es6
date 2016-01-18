@@ -4,19 +4,12 @@ const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(location.search)
 const target = document.getElementById('target')
 
 let candidates = (qp('candidates') || 'Yes|No').split('|')
-let running = false
+let freewheel, running
 let limit, i, j
-
-function disp() {
-  if (i > limit)
-    return setTimeout(stop, 100)
-
-  target.innerHTML = candidates[j++ % candidates.length]
-  setTimeout(disp, timeout(i++))
-}
 
 function start() {
   if (running) {
+    freewheel = false
     i = 0
     return
   }
@@ -25,22 +18,35 @@ function start() {
   candidates = shuffle(candidates)
   limit = 20 + Math.random() * 5
   target.classList.remove('highlight')
-  disp()
+  next()
 }
 
-function stop() {
-  target.classList.add('highlight')
+function next() {
+  if (i > limit) return setTimeout(end, 100)
+  if (freewheel) i++
+  target.innerHTML = candidates[j++ % candidates.length]
+  setTimeout(next, timeout(i))
+}
+
+function end() {
   running = false
+  target.classList.add('highlight')
 }
 
-window.addEventListener('keydown', e => {
-  if (e.keyCode === 0 || e.keyCode === 32) {
-    e.preventDefault()
-    start()
-  }
-})
+;['mousedown', 'touchstart', 'keydown'].forEach(e =>
+  document.addEventListener(e, e => {
+    if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
+      e.preventDefault()
+      start()
+    }
+  })
+)
 
-target.addEventListener('click', e => {
-  e.preventDefault()
-  start()
-})
+;['mouseup', 'touchend', 'keyup'].forEach(e =>
+  document.addEventListener(e, e => {
+    if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
+      e.preventDefault()
+      freewheel = true
+    }
+  })
+)
