@@ -2,8 +2,8 @@
   "name": "lottery",
   "version": "1.0.0",
   "scripts": {
-    "build": "babel lottery.es6 --out-file lottery.js",
-    "watch": "babel lottery.es6 --out-file lottery.js --watch"
+    "build": "babel lottery.js --out-file lottery.dist.js",
+    "watch": "npm run build -- --watch"
   },
   "babel": {
     "presets": [ "es2015" ]

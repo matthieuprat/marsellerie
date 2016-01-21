@@ -1,63 +1,52 @@
-'use strict';
+const timeout = i => 90 + 1000 * Math.pow(i / 50, 2)
+const shuffle = a => a.reduce((a, e) => (a.splice(Math.random() * (a.length + 1), 0, e), a), [])
+const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(location.search) || [])[1] || '')
+const target = document.getElementById('target')
 
-var timeout = function timeout(i) {
-  return 90 + 1000 * Math.pow(i / 50, 2);
-};
-var shuffle = function shuffle(a) {
-  return a.reduce(function (a, e) {
-    return a.splice(Math.random() * (a.length + 1), 0, e), a;
-  }, []);
-};
-var qp = function qp(p) {
-  return decodeURI((new RegExp('[?&]' + p + '=([^&#]*)').exec(location.search) || [])[1] || '');
-};
-var target = document.getElementById('target');
-
-var candidates = (qp('candidates') || 'Yes|No').split('|');
-var freewheel = undefined,
-    running = undefined;
-var limit = undefined,
-    i = undefined,
-    j = undefined;
+let candidates = (qp('candidates') || 'Yes|No').split('|')
+let freewheel, running
+let limit, i, j
 
 function start() {
   if (running) {
-    freewheel = false;
-    i = 0;
-    return;
+    freewheel = false
+    i = 0
+    return
   }
-  running = true;
-  i = j = 0;
-  candidates = shuffle(candidates);
-  limit = 20 + Math.random() * 5;
-  target.classList.remove('highlight');
-  next();
+  running = true
+  i = j = 0
+  candidates = shuffle(candidates)
+  limit = 20 + Math.random() * 5
+  target.classList.remove('highlight')
+  next()
 }
 
 function next() {
-  if (i > limit) return setTimeout(end, 100);
-  if (freewheel) i++;
-  target.innerHTML = candidates[j++ % candidates.length];
-  setTimeout(next, timeout(i));
+  if (i > limit) return setTimeout(end, 100)
+  if (freewheel) i++
+  target.innerHTML = candidates[j++ % candidates.length]
+  setTimeout(next, timeout(i))
 }
 
 function end() {
-  running = false;
-  target.classList.add('highlight');
+  running = false
+  target.classList.add('highlight')
 }
 
-;['mousedown', 'touchstart', 'keydown'].forEach(function (e) {
-  return document.addEventListener(e, function (e) {
+;['mousedown', 'touchstart', 'keydown'].forEach(e =>
+  document.addEventListener(e, e => {
     if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
-      e.preventDefault();
-      start();
+      e.preventDefault()
+      start()
     }
-  });
-});['mouseup', 'touchend', 'keyup'].forEach(function (e) {
-  return document.addEventListener(e, function (e) {
+  })
+)
+
+;['mouseup', 'touchend', 'keyup'].forEach(e =>
+  document.addEventListener(e, e => {
     if (e instanceof MouseEvent || e.keyCode === 0 || e.keyCode === 32) {
-      e.preventDefault();
-      freewheel = true;
+      e.preventDefault()
+      freewheel = true
     }
-  });
-});
+  })
+)
