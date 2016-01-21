@@ -9,7 +9,7 @@ var shuffle = function shuffle(a) {
   }, []);
 };
 var qp = function qp(p) {
-  return decodeURI((new RegExp('[?&]' + p + '=([^&#]*)').exec(location.search) || [])[1] || '');
+  return decodeURI((new RegExp('[?&]' + p + '=([^&#]*)').exec(window.location.search) || [])[1] || '');
 };
 var target = document.getElementById('target');
 

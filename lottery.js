@@ -1,13 +1,13 @@
 const timeout = i => 90 + 1000 * Math.pow(i / 50, 2)
 const shuffle = a => a.reduce((a, e) => (a.splice(Math.random() * (a.length + 1), 0, e), a), [])
-const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(location.search) || [])[1] || '')
+const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(window.location.search) || [])[1] || '')
 const target = document.getElementById('target')
 
 let candidates = (qp('candidates') || 'Yes|No').split('|')
 let freewheel, running
 let limit, i, j
 
-function start() {
+function start () {
   if (running) {
     freewheel = false
     i = 0
@@ -21,14 +21,14 @@ function start() {
   next()
 }
 
-function next() {
+function next () {
   if (i > limit) return setTimeout(end, 100)
   if (freewheel) i++
   target.innerHTML = candidates[j++ % candidates.length]
   setTimeout(next, timeout(i))
 }
 
-function end() {
+function end () {
   running = false
   target.classList.add('highlight')
 }
