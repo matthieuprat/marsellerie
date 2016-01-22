@@ -1,6 +1,6 @@
 const timeout = i => 90 + 1000 * Math.pow(i / 50, 2)
 const shuffle = a => a.reduce((a, e) => (a.splice(Math.random() * (a.length + 1), 0, e), a), [])
-const qp = p => decodeURI((new RegExp(`[?&]${p}=([^&#]*)`).exec(window.location.search) || [])[1] || '')
+const qp = p => decodeURI((new RegExp(`[?&#]${p}=([^&#]*)`).exec(window.location.search || window.location.hash) || [])[1] || '')
 const target = document.getElementById('target')
 
 let candidates = (qp('candidates') || 'Yes|No').split('|')
