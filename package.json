@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "babel lottery.js --out-file lottery.dist.js",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build -- --watch",
+    "lint": "standard"
   },
   "babel": {
     "presets": [ "es2015" ]

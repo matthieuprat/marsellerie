@@ -1,30 +1,59 @@
 body {
   display: flex;
+  flex-direction: column;
   position: absolute;
   height: 100%;
   width: 100%;
   margin: 0;
   align-items: center;     /* vertical-centering */
   justify-content: center; /* horizontal-centering */
+
+  font-family: Arial;
+  font-size: 2em;
   background: black;
 }
 
-div {
-  font-family: Arial;
-  font-size: 6em;
+#candidates {
+  display: none;
+  height: 100%;
+  width: 60%;
+  padding: 0.4em;
+  border: 0;
+
+  font-size: 1em;
+  line-height: 1.2;
+  background: white;
+}
+
+#candidate {
+  display: inline-block;
+  font-size: 3em;
   padding: 0.5em;
   color: lightgrey;
-  text-align: center;
   cursor: pointer;
 }
 
-.highlight {
+#candidate.highlight {
   color: black;
   background: lightgrey;
   transition: background 0.5s;
 }
 
-* {
+#corner {
+  position: absolute;
+  right: 0.2em;
+  top: 0;
+  color: white;
+  background: none;
+  border: none;
+  font-size: 1em;
+  outline: none;
+  cursor: pointer;
+}
+
+#target {
+  width: 100%;
+  text-align: center;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
