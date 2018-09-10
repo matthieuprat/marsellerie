@@ -58,7 +58,7 @@ cornerElement.addEventListener('click', function (e) {
   if (editMode) {
     candidates = candidatesElement.value.split('\n');
     location.hash = 'candidates=' + encodeURI(candidates.join('|'));
-    candidateElement.innerHTML = 'Press the space key';
+    candidateElement.innerHTML = 'La Marsellerie™';
   } else {
     candidatesElement.value = (qp('candidates') || 'Yes|No').split('|').join('\n');
   }
